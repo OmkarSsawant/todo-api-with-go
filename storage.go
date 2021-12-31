@@ -18,6 +18,6 @@ func getFirebaseTodos(gfs *firestore.Client) []models.Todo {
 	return todos
 }
 
-func addFirebaseTodos(gfs *firestore.Client, ...todos models.Todo) {
-
+func addFirebaseTodos(gfs *firestore.Client, *todos models.Todo) {
+	
 }
