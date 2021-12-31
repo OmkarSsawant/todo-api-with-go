@@ -1,25 +1,23 @@
 package main
 
 import (
-	"encoding/json"
-	"os"
+	"context"
 	"todo-api/models"
+
+	"cloud.google.com/go/firestore"
 )
 
-func saveJsonTodos(data []byte) bool {
-	err := os.WriteFile("storage.json", data, os.ModeTemporary)
-	if err != nil {
-		return false
+func getFirebaseTodos(gfs *firestore.Client) []models.Todo {
+	todos := make([]models.Todo, 0)
+	docs := gfs.Collection("todos").Documents(context.Background())
+	for doc, err := docs.Next(); err == nil; doc, err = docs.Next() {
+		var todo models.Todo
+		doc.DataTo(&todo)
+		todos = append(todos, todo)
 	}
-	return err == nil
+	return todos
 }
 
-func readJsonTodos(fileName string) []models.Todo {
-	var todos []models.Todo
-	jsonBytes, err := os.ReadFile(fileName)
-	if err != nil {
-		return nil
-	}
-	json.Unmarshal(jsonBytes, &todos)
-	return todos
+func addFirebaseTodos(gfs *firestore.Client, ...todos models.Todo) {
+
 }
