@@ -20,6 +20,6 @@ func readJsonTodos(fileName string) []models.Todo {
 	if err != nil {
 		return nil
 	}
-	json.Unmarshal(jsonBytes, todos)
+	json.Unmarshal(jsonBytes, &todos)
 	return todos
 }

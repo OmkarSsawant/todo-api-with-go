@@ -16,7 +16,7 @@ func HandleTodosUpdate(router *mux.Router, todos *[]models.Todo) {
 		body := r.Body
 		defer body.Close()
 		var modTodo models.Todo
-		err := json.NewDecoder(r.Body).Decode(modTodo)
+		err := json.NewDecoder(r.Body).Decode(&modTodo)
 		if i := findIndex(*todos, id); i == -1 || err != nil {
 			fmt.Fprint(w, "No Such Element In Data with id : ", id)
 		} else {
